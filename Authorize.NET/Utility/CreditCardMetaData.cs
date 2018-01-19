@@ -12,10 +12,14 @@ namespace AuthorizeNet.Utility
         public string ExpirationDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Country { get; set; }
         public string Description { get; set; }
         public string CustomerId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string Fax { get; set; }
+        public string PONumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public string CustomerIp { get; set; }
     }
 

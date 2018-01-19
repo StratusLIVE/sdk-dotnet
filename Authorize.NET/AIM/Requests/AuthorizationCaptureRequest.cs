@@ -69,9 +69,26 @@ namespace AuthorizeNet.AIM.Requests
             SetQueue(incomingCreditCard.Number, incomingCreditCard.ExpirationDate, amount, incomingCreditCard.Description);
             AddCustomer(incomingCreditCard.CustomerId, incomingCreditCard.Email, FinancialHelpers.GetFirstName(incomingCreditCard.CardholderName), FinancialHelpers.GetLastName(incomingCreditCard.CardholderName), incomingCreditCard.Address, incomingCreditCard.City, incomingCreditCard.StateOrProvince, incomingCreditCard.PostalCode);
             AddCardCode(incomingCreditCard.Cvv);
-            this.Queue(ApiFields.Phone, incomingCreditCard.PhoneNumber);
+            SetAdditonalFields(incomingCreditCard);
             this.CustomerIp = GetExternalIp();
             this.Queue(ApiFields.CustomerIPAddress, this.CustomerIp);
+        }
+
+        private void SetAdditonalFields(CreditCardMetadata incomingCreditCard)
+        {
+            if(!string.IsNullOrEmpty(incomingCreditCard.PhoneNumber))
+                this.Queue(ApiFields.Phone, incomingCreditCard.PhoneNumber);
+            if (!string.IsNullOrEmpty(incomingCreditCard.PhoneNumber))
+                this.Queue(ApiFields.Fax, incomingCreditCard.Fax);
+            if (!string.IsNullOrEmpty(incomingCreditCard.PhoneNumber))
+                this.Queue(ApiFields.CustomerID, incomingCreditCard.Fax);
+            if (!string.IsNullOrEmpty(incomingCreditCard.PhoneNumber))
+                this.Queue(ApiFields.PONumber, incomingCreditCard.PONumber);
+            if (!string.IsNullOrEmpty(incomingCreditCard.PhoneNumber))
+                this.Queue(ApiFields.InvoiceNumber, incomingCreditCard.InvoiceNumber);
+            this.Queue(ApiFields.CustomerID, incomingCreditCard.CustomerId);
+            if (!string.IsNullOrEmpty(incomingCreditCard.PhoneNumber))
+                this.Queue(ApiFields.Country, incomingCreditCard.Country);
         }
 
         private string GetExternalIp()
