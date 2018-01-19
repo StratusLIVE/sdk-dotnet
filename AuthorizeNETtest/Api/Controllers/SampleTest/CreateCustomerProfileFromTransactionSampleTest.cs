@@ -8,6 +8,7 @@
     using AuthorizeNet.Api.Controllers.Test;
     using AuthorizeNet.Util;
     using NUnit.Framework;
+    using AuthorizeNet.CIM;
 
     [TestFixture]
     public class CreateCustomerProfileFromTransactionSampleTest : ApiCoreTestBase
@@ -41,20 +42,18 @@
         public void SampleCodeCreateCustomerProfileFromTransaction()
         {
             LogHelper.info(Logger, "Sample createCustomerProfileFromTransaction");
+            var createRequest = new createCustomerProfileFromTransactionRequest();
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = CustomMerchantAuthenticationType;
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = TestEnvironment;
 
             //setup transaction to use
             var transactionId = GetTransactionId();
-            var createRequest = new createCustomerProfileFromTransactionRequest
-            {
-                refId = RefId,
-                transId = transactionId.ToString(CultureInfo.InvariantCulture),
-            };
-            //execute and get response
-            var createController = new createCustomerProfileFromTransactionController(createRequest);
-            var createResponse = createController.ExecuteWithApiResponse();
+            createRequest.refId = "11111111"; //request.RequestId;
+            createRequest.transId = transactionId.ToString(CultureInfo.InvariantCulture); // "60038686958"; // request.TransactionCode;
+            createRequest.merchantAuthentication = CustomMerchantAuthenticationType;
+            var transactionRequest = new CreateCustomerProfilePaymentFromTransaction();
+            var createResponse = (createCustomerProfileResponse)transactionRequest.CreateProfileFromTransaction(TestEnvironment, createRequest);
 
             //validate
             Assert.NotNull(createResponse);
@@ -85,7 +84,7 @@
             //set up data based on transaction
             var transactionAmount = SetValidTransactionAmount(Counter);
             var creditCard = new creditCardType { cardNumber = "4111111111111111", expirationDate = "0622" };
-            var aCustomer = new customerDataType { email = string.Format( "{0}@b.bla", Counter)};
+            var aCustomer = new customerDataType { email = string.Format("{0}@b.bla", Counter) };
 
             //standard api call to retrieve response
             var paymentType = new paymentType { Item = creditCard };

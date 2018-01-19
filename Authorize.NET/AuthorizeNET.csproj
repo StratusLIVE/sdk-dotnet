@@ -107,6 +107,7 @@
     <Compile Include="Api\Controllers\updateSplitTenderGroupController.cs" />
     <Compile Include="Api\Controllers\validateCustomerPaymentProfileController.cs" />
     <Compile Include="Api\Controllers\Bases\*.cs" />
+    <Compile Include="CIM\CreateCustomerProfilePaymentFromTransaction.cs" />
     <Compile Include="Utility\AnetRandom.cs" />
     <Compile Include="Utility\CreditCardMetaData.cs" />
     <Compile Include="Utility\FinancialHelpers.cs" />
