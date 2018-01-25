@@ -28,7 +28,7 @@ namespace AuthorizeNet.Api.Controllers.Test
         //protected static AuthorizeNet.Environment TestEnvironment = AuthorizeNet.Environment.HOSTED_VM;
         
 	    static Merchant _merchant ;
-	    static readonly String ApiLoginIdKey ;
+	    static readonly String ApiLoginIdKey;
 	    static readonly String TransactionKey ;
 	    static String _md5HashKey ;
 	

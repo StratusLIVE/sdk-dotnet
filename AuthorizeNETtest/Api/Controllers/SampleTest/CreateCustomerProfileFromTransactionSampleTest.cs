@@ -9,6 +9,7 @@
     using AuthorizeNet.Util;
     using NUnit.Framework;
     using AuthorizeNet.CIM;
+    using AuthorizeNet.Test;
 
     [TestFixture]
     public class CreateCustomerProfileFromTransactionSampleTest : ApiCoreTestBase
@@ -42,18 +43,28 @@
         public void SampleCodeCreateCustomerProfileFromTransaction()
         {
             LogHelper.info(Logger, "Sample createCustomerProfileFromTransaction");
-            var createRequest = new createCustomerProfileFromTransactionRequest();
+            //var createRequest = new createCustomerProfileFromTransactionRequest();
 
-            ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = CustomMerchantAuthenticationType;
-            ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = TestEnvironment;
+            //ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = CustomMerchantAuthenticationType;
+            //ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = TestEnvironment;
 
             //setup transaction to use
             var transactionId = GetTransactionId();
-            createRequest.refId = "11111111"; //request.RequestId;
-            createRequest.transId = transactionId.ToString(CultureInfo.InvariantCulture); // "60038686958"; // request.TransactionCode;
-            createRequest.merchantAuthentication = CustomMerchantAuthenticationType;
+            //createRequest.refId = "11111111"; //request.RequestId;
+            //createRequest.transId = transactionId.ToString(CultureInfo.InvariantCulture); // "60038686958"; // request.TransactionCode;
+            //createRequest.merchantAuthentication = CustomMerchantAuthenticationType;
+            var apiRequest = new APICore.createCustomerProfileFromTransactionRequest();
+            apiRequest.refId = "11111111"; // request.RequestId;
+            apiRequest.merchantAuthentication = new APICore.merchantAuthenticationType
+            {
+                name = UnitTestData.GetPropertyFromNames(AuthorizeNet.Util.Constants.EnvApiLoginid, AuthorizeNet.Util.Constants.PropApiLoginid),
+                ItemElementName = APICore.ItemChoiceType.transactionKey,
+                Item = UnitTestData.GetPropertyFromNames(AuthorizeNet.Util.Constants.EnvTransactionKey, AuthorizeNet.Util.Constants.PropTransactionKey),
+            };
+            apiRequest.transId = transactionId.ToString();
+            AuthorizeNet.Environment environment = AuthorizeNet.Environment.SANDBOX;
             var transactionRequest = new CreateCustomerProfilePaymentFromTransaction();
-            var createResponse = (createCustomerProfileResponse)transactionRequest.CreateProfileFromTransaction(TestEnvironment, createRequest);
+            var createResponse = (APICore.createCustomerProfileResponse)transactionRequest.CreateProfileFromTransaction(TestEnvironment, apiRequest);
 
             //validate
             Assert.NotNull(createResponse);

@@ -1,5 +1,5 @@
-﻿using AuthorizeNet.Api.Contracts.V1;
-using AuthorizeNet.Api.Controllers.Bases;
+﻿using AuthorizeNet.APICore;
+//using AuthorizeNet.Api.Controllers.Bases;
 using AuthorizeNet.Util;
 using System;
 using System.IO;
@@ -103,9 +103,9 @@ namespace AuthorizeNet.CIM
                     }
 
                     //if error response
-                    if (deSerializedObject is ErrorResponse)
+                    if (deSerializedObject is Utility.ErrorResponse)
                     {
-                        response = deSerializedObject as ErrorResponse;
+                        response = deSerializedObject as Utility.ErrorResponse;
                     }
                     else
                     {

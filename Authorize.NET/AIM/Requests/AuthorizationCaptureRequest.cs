@@ -23,9 +23,7 @@ namespace AuthorizeNet.AIM.Requests
         /// <param name="description">The description.</param>
         public AuthorizationCaptureRequest(string cardNumber, string expirationMonthAndYear, decimal amount, string description)
         {
-            this.SetApiAction(RequestAction.AuthorizeAndCapture);
-
-
+            //this.SetApiAction(RequestAction.AuthorizeAndCapture);
             SetQueue(cardNumber, expirationMonthAndYear, amount, description);
             this.Queue(ApiFields.CustomerIPAddress, this.CustomerIp);
         }
