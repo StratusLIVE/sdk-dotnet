@@ -68,7 +68,8 @@ namespace AuthorizeNet.AIM.Requests
             AddCustomer(incomingCreditCard.CustomerId, incomingCreditCard.Email, FinancialHelpers.GetFirstName(incomingCreditCard.CardholderName), FinancialHelpers.GetLastName(incomingCreditCard.CardholderName), incomingCreditCard.Address, incomingCreditCard.City, incomingCreditCard.StateOrProvince, incomingCreditCard.PostalCode);
             AddCardCode(incomingCreditCard.Cvv);
             SetAdditonalFields(incomingCreditCard);
-            this.CustomerIp = GetExternalIp();
+            if(this.CustomerIp == null)
+                this.CustomerIp = GetExternalIp();
             this.Queue(ApiFields.CustomerIPAddress, this.CustomerIp);
         }
 
